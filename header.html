@@ -1,20 +1,107 @@
-<header class="main-header">
+<style>
+    .main-header {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 75px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        background: rgba(0, 0, 0, 0.5);
+        z-index: 1000;
+        padding: 0 20px;
+    }
 
-    <!-- Botão hamburger -->
-    <div class="hamburger" onclick="toggleMenu()">
-        ☰
-    </div>
+    .nav-links ul {
+        display: flex;
+        list-style: none;
+        margin: 0;
+        padding: 0;
+    }
+
+    .nav-links ul li a {
+        text-decoration: none;
+        color: #fff;
+        font-size: 11px;
+        font-weight: 400;
+        letter-spacing: 2px;
+        padding: 10px 15px;
+        text-transform: uppercase;
+    }
+
+    /* RESPONSIVIDADE DO MENU */
+    @media (max-width: 1024px) {
+        .hamburger {
+            display: block !important;
+            color: white;
+            font-size: 30px;
+            cursor: pointer;
+        }
+
+        .nav-links {
+            position: fixed;
+            top: 0;
+            right: -100%; /* Escondido à direita */
+            width: 300px;
+            height: 100vh;
+            background: #1a1a1a;
+            transition: right 0.4s ease-in-out;
+            z-index: 1050;
+            padding-top: 60px;
+        }
+
+        .nav-links.active {
+            right: 0; /* Desliza para dentro */
+        }
+
+        .nav-links ul {
+            flex-direction: column;
+        }
+
+        .nav-links ul li {
+            border-bottom: 1px solid rgba(255,255,255,0.1);
+        }
+
+        .nav-links ul li a {
+            display: block;
+            padding: 20px;
+            font-size: 14px;
+        }
+
+        .close-menu {
+            display: block;
+            position: absolute;
+            top: 15px;
+            right: 20px;
+            color: white;
+            font-size: 25px;
+            cursor: pointer;
+        }
+    }
+
+    @media (min-width: 1025px) {
+        .hamburger, .close-menu { display: none; }
+    }
+</style>
+
+<header class="main-header">
+    <div class="logo"></div>
 
     <nav class="nav-links" id="mobileMenu">
+        <div class="close-menu" onclick="toggleMenu()">✕</div>
         <ul>
-            <li><a href="index.php">O ALOJAMENTO</a></li>
+            <li><a href="alojamento.html">O ALOJAMENTO</a></li>
             <li><a href="quartos.php">CASAS</a></li>
-            <li><a href="#">REGIÃO</a></li>
-            <li><a href="#">RESERVAR</a></li>
+            <li><a href="#">PREÇOS</a></li>
             <li><a href="#">OFERTAS</a></li>
             <li><a href="#">GALERIA</a></li>
             <li><a href="#">CONTACTOS</a></li>
+            <li><a href="#">RESERVAR</a></li>
         </ul>
     </nav>
 
+    <div class="hamburger" onclick="toggleMenu()">
+        ☰
+    </div>
 </header>

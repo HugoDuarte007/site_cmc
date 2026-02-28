@@ -6,105 +6,89 @@
     font-family: 'Open Sans', 'Segoe UI', Arial, sans-serif;
 }
 
-body, html {
+body,
+html {
+    -ms-overflow-style: none; /* IE e Edge */
+    scrollbar-width: none;    /* Firefox */
     height: 100%;
     width: 100%;
-    background-color: transparent; /* Alterado de #000 para transparente */
-    overflow-x: hidden;
-}
-
-.main-header {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 75px;
-    display: flex;
-    justify-content: flex-end;
-    align-items: center;
-    background: linear-gradient(to bottom, rgba(0,0,0,0.5) 0%, rgba(0,0,0,0) 100%);
-    z-index: 1000;
-}
-/* Navegação */
-.nav-links ul {
-    display: flex;
-    list-style: none;
-    margin-right: 20px;
-}
-
-.nav-links ul li a {
-    text-decoration: none;
-    color: #fff;
-    font-size: 11px;
-    font-weight: 400;
-    letter-spacing: 2px;
-    padding: 10px 15px;
-    text-transform: uppercase;
-    transition: opacity 0.3s;
-}
-
-.nav-links ul li a:hover {
-    opacity: 0.7;
-}
-
-/* Grupo de Botões de Ação */
-.action-group {
-    display: flex;
-    height: 100%;
-    align-items: stretch; /* Faz os botões ocuparem a altura toda */
-}
-
-.action-group a, .lang-selector {
-    text-decoration: none;
-    color: #fff;
-    display: flex;
-    align-items: center;
-    padding: 0 25px;
-    font-size: 11px;
-    font-weight: 600;
-    letter-spacing: 1.5px;
-    text-transform: uppercase;
-}
-
-/* Cores específicas dos botões */
-.btn-black { background-color: rgba(0, 0, 0, 0.85); }
-.btn-orange { background-color: #a44d32; }
-.btn-brown { background-color: #8c7654; }
-
-.lang-selector {
     background-color: transparent;
-    cursor: pointer;
-    font-weight: 400;
+    overflow-x: hidden; /* Evita scroll horizontal */
 }
 
-.video-container {
-    position: fixed;
+body::-webkit-scrollbar {
+    display: none; /* Chrome, Safari e Opera */
+}
+
+/* 2. CARROSSEL (HERO SLIDER) */
+.hero-slider {
+    position: relative;
+    width: 100%;
+    height: 100vh;
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.slide {
+    position: absolute;
     top: 0;
     left: 0;
     width: 100%;
-    height: 100vh;
-    z-index: -1; /* Mantém atrás, mas sem nada por cima a tapar */
-    overflow: hidden;
+    height: 100%;
+    opacity: 0;
+    transition: opacity 0.8s ease-in-out;
+    background-size: cover;
+    background-position: center;
 }
 
-/* 3. Garante que o vídeo ocupa o espaço todo */
-#bg-video {
-    width: 100vw;
-    height: 100vh;
+.slide.active {
+    opacity: 1;
+}
+
+.bg-media {
+    width: 100%;
+    height: 100%;
     object-fit: cover;
 }
 
-/* Camada escura sobre o vídeo (importante para o logo branco destacar) */
 .overlay {
     position: absolute;
     top: 0;
     left: 0;
     width: 100%;
     height: 100%;
-    background: rgba(0, 0, 0, 0.15); 
+    background: rgba(0, 0, 0, 0.15);
+    z-index: 1;
 }
 
-/* 4. CONTEÚDO CENTRAL (HERO) */
+/* 3. CONTROLOS DO CARROSSEL */
+.prev-btn,
+.next-btn {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    background: rgba(0, 0, 0, 0.3);
+    color: white;
+    border: none;
+    font-size: 30px;
+    padding: 20px 15px;
+    cursor: pointer;
+    z-index: 10;
+    transition: background 0.3s;
+    border-radius: 5px;
+}
+
+.prev-btn:hover,
+.next-btn:hover {
+    background: rgba(0, 0, 0, 0.6);
+}
+
+.prev-btn { left: 20px; }
+.next-btn { right: 20px; }
+
+/* 4. CONTEÚDO HERO (LOGO E SCROLL) */
 .hero-content {
     height: 100vh;
     display: flex;
@@ -114,27 +98,18 @@ body, html {
     color: #fff;
     text-align: center;
     position: relative;
+    z-index: 5;
+    padding: 0 20px; /* Margem interna para o conteúdo não bater nos bordos */
 }
 
 .logo-box img {
-    width: 280px; /* Ajusta conforme o tamanho do teu logo */
+    max-width: 100%; /* Garante que a imagem não ultrapassa o ecrã */
+    width: 280px;
     height: auto;
     margin-bottom: 25px;
-    filter: drop-shadow(0px 4px 10px rgba(0,0,0,0.3));
+    filter: drop-shadow(0px 4px 10px rgba(0, 0, 0, 0.3));
 }
 
-.logo-box p {
-    font-size: 10px;
-    letter-spacing: 4px;
-    text-transform: uppercase;
-    font-weight: 300;
-}
-
-.logo-box strong {
-    font-weight: 700;
-}
-
-/* 5. ÍCONE DE SCROLL (Animação de seta) */
 .scroll-down {
     position: absolute;
     bottom: 40px;
@@ -146,58 +121,47 @@ body, html {
 .scroll-down svg {
     width: 30px;
     fill: #fff;
-    animation: bounce 2s infinite;
 }
 
-@keyframes bounce {
-    0%, 20%, 50%, 80%, 100% { transform: translateY(0) translateX(-50%); }
-    40% { transform: translateY(-10px) translateX(-50%); }
-    60% { transform: translateY(-5px) translateX(-50%); }
+/* 5. SECÇÃO DE CONTEÚDO (ONDE ESTÁ O TEU TEXTO "AAAAA") */
+.content-section {
+    padding: 80px 20px;
+    text-align: center;
+    background-color: #fff;
+    color: #333;
+    min-height: 800px;
+    width: 100%;
 }
 
-/* 6. RESPONSIVIDADE BÁSICA */
+/* CORREÇÃO DO TEXTO QUE SAI FORA: */
+.content-section h1, 
+.content-section p {
+    word-wrap: break-word;      /* Quebra palavras longas */
+    overflow-wrap: break-word;   /* Garante a quebra em browsers modernos */
+    white-space: normal;        /* Permite que o texto flua para a linha de baixo */
+    max-width: 100%;            /* Limita a largura ao ecrã */
+    font-size: clamp(1.5rem, 8vw, 3rem); /* Tamanho de fonte fluido (mínimo, ideal, máximo) */
+}
+
+/* 6. AJUSTES DE RESPONSIVIDADE (MEDIA QUERIES) */
 @media (max-width: 1024px) {
-    .nav-links { display: none; } /* Esconde o menu em tablets/phones para usar hambúrguer depois */
-    .logo-box img { width: 200px; }
-}
-/* HAMBURGER */
-.hamburger {
-    display: none;
-    color: #fff;
-    font-size: 26px;
-    cursor: pointer;
-    padding: 0 20px;
+    .prev-btn, .next-btn {
+        padding: 15px 10px;
+        font-size: 24px;
+    }
 }
 
-/* ===== MOBILE ===== */
-@media (max-width: 1024px) {
-
-    /* mostra hamburger */
-    .hamburger {
-        display: block;
+@media (max-width: 768px) {
+    .hero-content {
+        padding: 0 10px;
+    }
+    
+    .logo-box img {
+        width: 200px;
     }
 
-    /* esconde menu normal */
-    .nav-links {
-        position: fixed;
-        top: 75px;
-        right: 0;
-        width: 100%;
-        background: rgba(0,0,0,0.95);
-        display: none;
-        text-align: center;
-    }
 
-    .nav-links.active {
-        display: block;
-    }
-
-    .nav-links ul {
-        flex-direction: column;
-        margin: 0;
-    }
-
-    .nav-links ul li {
-        padding: 15px 0;
+    .content-section {
+        padding: 40px 15px;
     }
 }

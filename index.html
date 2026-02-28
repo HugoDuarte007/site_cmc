@@ -10,32 +10,64 @@
 
     <div id="header-placeholder"></div>
 
-    <div class="video-container">
-        <video autoplay muted loop playsinline id="bg-video">
-            <source src="background.mp4" type="video/mp4">
-        </video>
-        <div class="overlay"></div>
-    </div>
+    <main>
+        <section class="hero-slider">
+            <div class="slide active">
+                <video autoplay muted loop playsinline class="bg-media">
+                    <source src="background.mp4" type="video/mp4">
+                </video>
+            </div>
 
-    <main class="hero-content">
-        
+            <div class="slide" style="background-image: url('foto1.jpg');"></div>
+            <div class="slide" style="background-image: url('foto2.jpg');"></div>
+
+            <div class="overlay"></div>
+
+            <button class="prev-btn" onclick="changeSlide(-1)">&#10094;</button>
+            <button class="next-btn" onclick="changeSlide(1)">&#10095;</button>
+
+            <!-- <div class="hero-content">
+                <div class="logo-box">
+                    <img src="logo.png" alt="Logo">
+                    <p>Monte do <strong>Crato</strong></p>
+                </div>
+                <div class="scroll-down" onclick="window.scrollTo({top: window.innerHeight, behavior: 'smooth'})">
+                    <svg viewBox="0 0 24 24"><path d="M7.41 8.59L12 13.17l4.59-4.58L18 10l-6 6-6-6 1.41-1.41z"/></svg>
+                </div>
+            </div> -->
+        </section>
+
+        <section class="content-section">
+            <h1>AAAAaaaaaaaaaaaaAAAAAA</h1>
+        </section>
     </main>
 
     <script>
-    fetch('header.html')
-        .then(response => {
-            if (!response.ok) throw new Error("Erro de rede");
-            return response.text();
-        })
-        .then(data => {
-            document.getElementById('header-placeholder').innerHTML = data;
-        })
-        .catch(error => {
-            console.error('Erro ao carregar o header:', error);
-            // Alerta visual para saberes se o erro é o caminho do ficheiro
-            document.getElementById('header-placeholder').innerHTML = "Erro ao carregar header.html";
-        });
-</script>
+        // Carrega o Header
+        fetch('header.html')
+            .then(response => response.text())
+            .then(data => {
+                document.getElementById('header-placeholder').innerHTML = data;
+            })
+            .catch(error => console.error('Erro:', error));
+
+        // Lógica do Carrossel
+        let currentSlide = 0;
+        const slides = document.querySelectorAll('.slide');
+
+        function changeSlide(direction) {
+            slides[currentSlide].classList.remove('active');
+            currentSlide = (currentSlide + direction + slides.length) % slides.length;
+            slides[currentSlide].classList.add('active');
+        }
+
+        // Função de Toggle para o menu mobile
+        function toggleMenu() {
+            const menu = document.getElementById('mobileMenu');
+            if (menu) {
+                menu.classList.toggle('active');
+            }
+        }
+    </script>
 </body>
 </html>
-
