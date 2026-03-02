@@ -1,11 +1,13 @@
 <!DOCTYPE html>
 <html lang="pt">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Casas Monte do Crato</title>
     <link rel="stylesheet" href="style.css">
 </head>
+
 <body>
 
     <div id="header-placeholder"></div>
@@ -14,33 +16,25 @@
         <section class="hero-slider">
             <div class="slide active">
                 <video autoplay muted loop playsinline class="bg-media">
-                    <source src="background.mp4" type="video/mp4">
+                    <source src="carrosel_index/video.mp4" type="video/mp4">
                 </video>
             </div>
 
-            <div class="slide" style="background-image: url('foto1.jpg');"></div>
+            <div class="slide" style="background-image: url('carrosel_index/foto1.png');"></div>
             <div class="slide" style="background-image: url('foto2.jpg');"></div>
 
             <div class="overlay"></div>
 
             <button class="prev-btn" onclick="changeSlide(-1)">&#10094;</button>
             <button class="next-btn" onclick="changeSlide(1)">&#10095;</button>
-
-            <!-- <div class="hero-content">
-                <div class="logo-box">
-                    <img src="logo.png" alt="Logo">
-                    <p>Monte do <strong>Crato</strong></p>
-                </div>
-                <div class="scroll-down" onclick="window.scrollTo({top: window.innerHeight, behavior: 'smooth'})">
-                    <svg viewBox="0 0 24 24"><path d="M7.41 8.59L12 13.17l4.59-4.58L18 10l-6 6-6-6 1.41-1.41z"/></svg>
-                </div>
-            </div> -->
         </section>
-        
+
         <section class="content-section">
             <h1>Casa Monte do Crato</h1>
         </section>
     </main>
+
+    <div id="footer-placeholder"></div>
 
     <script>
         // Carrega o Header
@@ -50,6 +44,14 @@
                 document.getElementById('header-placeholder').innerHTML = data;
             })
             .catch(error => console.error('Erro:', error));
+
+        // Carrega o Footer
+        fetch('footer.html')
+            .then(response => response.text())
+            .then(data => {
+                document.getElementById('footer-placeholder').innerHTML = data;
+            })
+            .catch(error => console.error('Erro ao carregar o footer:', error));
 
         // Lógica do Carrossel
         let currentSlide = 0;
@@ -61,7 +63,6 @@
             slides[currentSlide].classList.add('active');
         }
 
-        // Função de Toggle para o menu mobile
         function toggleMenu() {
             const menu = document.getElementById('mobileMenu');
             if (menu) {
